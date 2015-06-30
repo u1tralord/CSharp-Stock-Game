@@ -30,15 +30,57 @@ abstract class MenuScreen : Screen{
 		{
 			//Close Program
 		}
+
+		if (key.Key == ConsoleKey.Enter)
+		{
+			options[GetHighlighted()].Select(EventArgs.Empty);
+		}
 		
 		if (key.Key == ConsoleKey.UpArrow){ChangeHighlighted(1);}
 		if (key.Key == ConsoleKey.DownArrow){ChangeHighlighted(-1);}
 		if (key.Key == ConsoleKey.LeftArrow){Console.Write("<");}
 		if (key.Key == ConsoleKey.RightArrow){Console.Write(">");}
 		
+		switch(key.KeyChar){
+			case '1': 
+				HightlightOption(0);
+				break;
+			case '2': 
+				HightlightOption(1);
+				break;
+			case '3': 
+				HightlightOption(2);
+				break;
+			case '4': 
+				HightlightOption(3);
+				break;
+			case '5': 
+				HightlightOption(4);
+				break;
+			case '6': 
+				HightlightOption(5);
+				break;
+			case '7': 
+				HightlightOption(6);
+				break;
+			case '8': 
+				HightlightOption(7);
+				break;
+			case '9': 
+				HightlightOption(8);
+				break;
+		}
 		if (key.KeyChar == 'a')
 		{
-			Console.Write("You pressed a");
+			//Console.Write("You pressed a");
+		}
+	}
+	
+	public void HightlightOption(int optionIndex){
+		if(optionIndex >= 0 && optionIndex < options.Count){
+			options[GetHighlighted()].Highlighted = false;
+			options[optionIndex].Highlighted = true;
+			options[optionIndex].Select(EventArgs.Empty);
 		}
 	}
 	

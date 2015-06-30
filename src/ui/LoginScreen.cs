@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 class LoginScreen : MenuScreen{
 	int bWidth = 30;
@@ -13,14 +14,25 @@ class LoginScreen : MenuScreen{
 		options = new List<MenuOption>();
 		MenuOption login = new MenuOption("Login");
 		login.Highlighted = true;
+		login.OptionSelected += LoginSelected;
 		
 		MenuOption createAcct = new MenuOption("Create Account");
+		createAcct.OptionSelected += CreateAccountSelected;
+		
 		options.Add(login);
 		options.Add(createAcct);
 		
 		bX = Console.WindowWidth/2-bWidth/2;
 		bY = Console.WindowHeight/2-bHeight/2;
 		textXPos = bX + 2;
+	}
+	
+	public void LoginSelected(object sender, EventArgs e){
+		
+	}
+	
+	public void CreateAccountSelected(object sender, EventArgs e){
+		
 	}
 	
 	public void DrawTitle(){

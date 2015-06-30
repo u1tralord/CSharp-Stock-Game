@@ -18,7 +18,7 @@ class MenuOption{
 		set;
 	}
 	
-	protected virtual void PerformEvents(EventArgs e)
+	public void Select(EventArgs e)
 	{
 		EventHandler handler = OptionSelected;
 		if (handler != null)
