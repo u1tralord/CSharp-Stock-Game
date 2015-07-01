@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 *.bat
 *.exe
 *.sln
@@ -8,7 +7,4 @@ App.config
 bin\*
 obj\*
 Properties\*
-=======
-*.bat
-*.exe
->>>>>>> 468788a3fe8b42456d77178c100b8a5a5675155f
+profiles\*

@@ -3,13 +3,19 @@ using System.Collections.Generic;
 
 namespace Stock_Game.ui
 {
-    abstract class MenuScreen : Screen
+    public abstract class MenuScreen : Screen
     {
         public int menuWidth;
         public int menuHeight;
         public int menuXPos;
         public int menuYPos;
 		public int textXPos;
+		
+		public int MAX_MENU_WIDTH = (int)Math.Round(Console.WindowWidth * 0.8);
+		public int MAX_MENU_HEIGHT = (int)Math.Round(Console.WindowHeight * 0.8);
+		
+		
+		public int optionsDisplayed = -1;
 		
         public List<MenuOption> options;
         public string title;
@@ -56,11 +62,27 @@ namespace Stock_Game.ui
 		
 		public void DrawOptions(){
 			Console.SetCursorPosition(textXPos, menuYPos + 3);
-            for (int i = 0; i < options.Count; i++)
-            {
-                Console.Write("[{0}] {1}", options[i].Highlighted ? "*" : Convert.ToString(i+1) , options[i].OptionText);
-                Console.SetCursorPosition(textXPos, Console.CursorTop + 2);
-            }
+			
+			if(optionsDisplayed == -1){
+				for (int i = 0; i < options.Count; i++)
+				{
+					Console.Write("[{0}] {1}", options[i].Highlighted ? "*" : Convert.ToString(i+1) , options[i].OptionText);
+					Console.SetCursorPosition(textXPos, Console.CursorTop + 2);
+				}
+			}
+			else{
+				
+				//SCOLLING NEEDS TO BE FIXED
+				int startDrawing = 0;
+				if(GetHighlighted() > (int)(optionsDisplayed*0.6))
+					startDrawing = GetHighlighted()-1;
+				
+				for (int i = startDrawing; i < optionsDisplayed+startDrawing; i++)
+				{
+					Console.Write("[{0}] {1}", options[i].Highlighted ? "*" : Convert.ToString(i+1) , options[i].OptionText);
+					Console.SetCursorPosition(textXPos, Console.CursorTop + 2);
+				}
+			}
 		}
 		
         public void DrawMenuLine()
@@ -159,8 +181,15 @@ namespace Stock_Game.ui
         {
             if (options != null)
             {
-                menuWidth = (GetMaxWidth() + 8 <= Console.WindowWidth) ? GetMaxWidth() + 8 : Console.WindowWidth;
-                menuHeight = (options.Count * 2 + 4 <= Console.WindowHeight) ? options.Count * 2 + 4 : Console.WindowHeight;
+                menuWidth = (GetMaxWidth() + 8 <= MAX_MENU_WIDTH) ? GetMaxWidth() + 8 : MAX_MENU_WIDTH;
+				
+				if(options.Count * 2 + 4 <= MAX_MENU_HEIGHT)
+					menuHeight = options.Count * 2 + 4;
+				else{
+					menuHeight = MAX_MENU_HEIGHT;
+					optionsDisplayed = (MAX_MENU_HEIGHT - 4)/2;
+				}
+                //menuHeight = (options.Count * 2 + 4 <= Console.WindowHeight) ? options.Count * 2 + 4 : Console.WindowHeight;
             }
         }
 

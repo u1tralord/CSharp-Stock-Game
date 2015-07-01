@@ -1,4 +1,14 @@
-﻿using System;
+﻿/**
+* TODO:
+* MenuScreen Scrolling fix
+* Buy Stock Screen
+* Sell Stock Screen
+* View Portfolio Screen
+* Analyze Stock Screen
+* Login Screen
+* Create Account Screen
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,11 +21,15 @@ using Stock_Game.market;
 
 namespace Stock_Game.core
 {
-    class StockGame
+    public class StockGame
     {
-        bool running = true;
-        Screen currentScreen;
-
+		
+        private static bool running = true;
+		private static List<Screen> previousScreens = new List<Screen>();
+		
+		private static Profile profile;
+		private static Screen currentScreen;
+		
         public void Start()
         {
             currentScreen = new StartScreen();
@@ -28,5 +42,29 @@ namespace Stock_Game.core
                 currentScreen.KeyPress(x);
             }
         }
+		
+		public static void ChangeScreen(Screen newScreen, Screen oldScreen){
+			currentScreen = newScreen;
+			previousScreens.Add(oldScreen);
+		}
+		
+		public static bool Running{
+			get{ return running; }
+			set{ running = value; }
+		}
+		
+		public static Profile Account{
+			get{ return profile; }
+			set{ profile = value; }
+		}
+		
+		public static Screen CurrentScreen{
+			get{ return currentScreen; }
+			set{ currentScreen = value; }
+		}
+		
+		public static List<Screen> PreviousScreens{
+			get{ return previousScreens; }
+		}
     }
 }

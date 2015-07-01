@@ -6,7 +6,7 @@ using Stock_Game.core;
 
 namespace Stock_Game.ui.screens
 {
-    class StartScreen : MenuScreen
+    public class StartScreen : MenuScreen
     {
         public StartScreen()
         {
@@ -21,12 +21,9 @@ namespace Stock_Game.ui.screens
             MenuOption createAcct = new MenuOption("Create Account");
             createAcct.OptionSelected += CreateAccountSelected;
 			
-			MenuOption goBack = new MenuOption("Go Back");
-            goBack.OptionSelected += GoBackSelected;
 
             options.Add(login);
             options.Add(createAcct);
-			options.Add(goBack);
 
             CalculateWindowSize();
             CalculateWindowPosition();
@@ -36,17 +33,14 @@ namespace Stock_Game.ui.screens
 
         public void LoginSelected(object sender, EventArgs e)
         {
-			
+			Profile p = new Profile(@"profiles\Jacob.profile");
+			StockGame.Account = p;
+			StockGame.ChangeScreen(new MainMenu(), this);
         }
-
         public void CreateAccountSelected(object sender, EventArgs e)
         {
-			
-        }
-		
-		public void GoBackSelected(object sender, EventArgs e)
-        {
-			
+			Profile p = new Profile("Jacob", Cryptography.GetHash("PASSWORD"), 100000);
+			p.Save();
         }
 
         public override void Draw()

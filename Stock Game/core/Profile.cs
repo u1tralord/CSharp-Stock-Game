@@ -9,10 +9,11 @@ namespace Stock_Game.core
 {
     public class Profile
     {
+		public static string defaultProfileLocation = @"profiles\";
+		
         string name;
         string hashedPassword;
         long balance;
-		static string defaultProfileLocation = @"profiles\";
 		
         Dictionary<string, int> stocks;
 
@@ -44,8 +45,8 @@ namespace Stock_Game.core
 					String[] segments = s.Split(':');
 					stocks.Add(segments[0], Convert.ToInt32(segments[1]));
 				}
-			} catch (IOException e){Console.WriteLine("The profile chosen could not be found.");
-			} catch (Exception e){ Console.WriteLine("The selected file could not be parsed. It may be corrupted or unreadable.");}
+			} catch (IOException e){Console.WriteLine("The profile chosen could not be found." + e);
+			} catch (Exception e){ Console.WriteLine("The selected file could not be parsed. It may be corrupted or unreadable." + e);}
 		
             return -1;
         }

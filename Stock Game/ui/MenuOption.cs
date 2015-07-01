@@ -2,9 +2,8 @@ using System;
 
 namespace Stock_Game.ui
 {
-    class MenuOption
+    public class MenuOption
     {
-
         public event EventHandler OptionSelected;
 
         public MenuOption(string text)
