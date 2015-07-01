@@ -3,39 +3,27 @@ using System.Collections.Generic;
 using System.IO;
 
 using Stock_Game.core;
+using Stock_Game.market;
 
 namespace Stock_Game.ui.screens
 {
-    public class MainMenu : MenuScreen
+    public class PortfolioScreen : MenuScreen
     {
-        public MainMenu()
+        public PortfolioScreen()
         {
-            title = "Main Menu";
-
-
+            title = "Portfolio";
             options = new List<MenuOption>();
 			
-			MenuOption buy = new MenuOption("Buy Stocks");
-			buy.OptionSelected += BuySelected;
-			buy.Highlighted = true;
+			MenuOption rowTitle = new MenuOption(string.Format("{0, 5}|{1, 6}|{2, 10}|{3, 10}", "SYMB", "Owned", "Value", "Total"));
+			options.Add(rowTitle);
 			
-            MenuOption sell = new MenuOption("Sell Stocks");
-			sell.OptionSelected += SellSelected;
-			
-			MenuOption viewPortfolio = new MenuOption("View Portfolio");
-			viewPortfolio.OptionSelected += PortfolioSelected;
-			
-			MenuOption goBack = new MenuOption("Go Back");
-			goBack.OptionSelected += GoBackSelected;
-			
-			options.Add(buy);
-			options.Add(sell);
-			options.Add(viewPortfolio);
-			options.Add(goBack);
-
-			for(int i = 0; i < 10; i++)
+			foreach(string key in StockGame.Account.Stocks.Keys)
 			{
-				options.Add(new MenuOption("Option #"+i));
+				Stock stock = StockGame.GetStock(key);
+				int owned = StockGame.Account.Stocks[key];
+				
+				MenuOption stockOption = new MenuOption(string.Format("{0, 5}|{1, 6}|{2, 10:0.00}|{3, 10:0.00}", stock.Symbol.PadLeft(3, ' '), owned.ToString(), stock.LatestTradePrice, (owned * stock.LatestTradePrice)));
+				options.Add(stockOption);
 			}
             CalculateWindowSize();
             CalculateWindowPosition();
@@ -55,7 +43,7 @@ namespace Stock_Game.ui.screens
 		
 		public void PortfolioSelected(object sender, EventArgs e)
         {
-			StockGame.ChangeScreen(new PortfolioScreen(), this);
+			
         }
 		
 		public void GoBackSelected(object sender, EventArgs e)

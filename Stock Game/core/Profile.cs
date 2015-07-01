@@ -13,7 +13,7 @@ namespace Stock_Game.core
 		
         string name;
         string hashedPassword;
-        long balance;
+        double balance;
 		
         Dictionary<string, int> stocks;
 
@@ -22,7 +22,7 @@ namespace Stock_Game.core
             Load(accountFile);
         }
 
-        public Profile(string username, string hashPass, long balance0)
+        public Profile(string username, string hashPass, double balance0)
         {
             this.name = username;
             this.hashedPassword = hashPass;
@@ -38,7 +38,7 @@ namespace Stock_Game.core
 				lines.RemoveAt(0);
 				this.hashedPassword = lines[0];
 				lines.RemoveAt(0);
-				this.balance = Convert.ToInt64(lines[0]);
+				this.balance = Convert.ToDouble(lines[0]);
 				lines.RemoveAt(0);
 				
 				foreach(String s in lines){
@@ -99,8 +99,21 @@ namespace Stock_Game.core
 			set{ this.hashedPassword = value; }
 		}
 		
-		public long Balance{
+		public double Balance{
 			get{ return this.balance; }
+		}
+		
+		public double TotalStockWorth{
+			get{
+				double sumValue = 0;
+				
+				foreach(string key in stocks.Keys)
+				{
+					//1 IS A SUBSTITUTION FOR THE STOCK VALUE
+					sumValue += (double)(stocks[key] * StockGame.GetStockValue(key));
+				}
+				return sumValue;
+			}
 		}
 		
 		public Dictionary<string, int> Stocks{

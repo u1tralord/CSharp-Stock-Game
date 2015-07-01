@@ -28,6 +28,7 @@ namespace Stock_Game.core
 		private static List<Screen> previousScreens = new List<Screen>();
 		
 		private static Profile profile;
+		private static Dictionary<string, Stock> stockCache = new Dictionary<string, Stock>();
 		private static Screen currentScreen;
 		
         public void Start()
@@ -48,6 +49,17 @@ namespace Stock_Game.core
 			previousScreens.Add(oldScreen);
 		}
 		
+		public static Stock GetStock(string stockSymbol){
+			if(!stockCache.ContainsKey(stockSymbol) && stockSymbol.Length == 4)
+				stockCache.Add(stockSymbol, new Stock(stockSymbol));
+			
+			return stockCache[stockSymbol];
+		}
+		
+		public static double GetStockValue(string stockSymbol){
+			return GetStock(stockSymbol).LatestTradePrice;
+		}
+		
 		public static bool Running{
 			get{ return running; }
 			set{ running = value; }
@@ -55,7 +67,13 @@ namespace Stock_Game.core
 		
 		public static Profile Account{
 			get{ return profile; }
-			set{ profile = value; }
+			set{
+				profile = value; 
+				foreach(string key in profile.Stocks.Keys){
+					if(!stockCache.ContainsKey(key))
+						stockCache.Add(key, new Stock(key));
+				}
+			}
 		}
 		
 		public static Screen CurrentScreen{
