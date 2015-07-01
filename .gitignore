@@ -1,0 +1,9 @@
+*.bat
+*.exe
+*.sln
+*.suo
+*.csproj
+App.config
+bin\*
+obj\*
+Properties\*
