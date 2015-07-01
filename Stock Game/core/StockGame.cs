@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 using Stock_Game.ui;
+using Stock_Game.ui.screens;
+using Stock_Game.market;
 
 namespace Stock_Game.core
 {
@@ -16,6 +19,7 @@ namespace Stock_Game.core
         public void Start()
         {
             currentScreen = new StartScreen();
+			//Stock google = new Stock("GOOG");
 
             while (running)
             {

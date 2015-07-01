@@ -9,7 +9,8 @@ namespace Stock_Game.ui
         public int menuHeight;
         public int menuXPos;
         public int menuYPos;
-
+		public int textXPos;
+		
         public List<MenuOption> options;
         public string title;
 
@@ -17,6 +18,13 @@ namespace Stock_Game.ui
         {
             Console.Clear();
             DrawBorder(0, 0, Console.WindowWidth, Console.WindowHeight - 1);
+			
+			if (menuWidth != default(int) && menuHeight != default(int) && menuXPos != default(int) && menuYPos != default(int))
+				DrawBorder(menuXPos, menuYPos, menuWidth, menuHeight);
+			if(!String.IsNullOrEmpty(title))
+				DrawTitle();
+			if(options != null)
+				DrawOptions();
         }
 
         public static void DrawBorder(int xPos, int yPos, int w, int h)
@@ -37,7 +45,24 @@ namespace Stock_Game.ui
                 Console.SetCursorPosition(xPos, yPos + y + 1);
             }
         }
-
+		
+		public void DrawTitle()
+        {
+            Console.SetCursorPosition(textXPos, menuYPos + 1);
+            Console.Write(title);
+            Console.SetCursorPosition(menuXPos + 1, menuYPos + 2);
+            DrawMenuLine();
+        }
+		
+		public void DrawOptions(){
+			Console.SetCursorPosition(textXPos, menuYPos + 3);
+            for (int i = 0; i < options.Count; i++)
+            {
+                Console.Write("[{0}] {1}", options[i].Highlighted ? "*" : Convert.ToString(i+1) , options[i].OptionText);
+                Console.SetCursorPosition(textXPos, Console.CursorTop + 2);
+            }
+		}
+		
         public void DrawMenuLine()
         {
             for (int i = 0; i < menuWidth - 1; i++) 
