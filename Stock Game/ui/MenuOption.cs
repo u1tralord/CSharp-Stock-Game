@@ -1,6 +1,6 @@
 using System;
 
-namespace Stock_Game
+namespace Stock_Game.ui
 {
     class MenuOption
     {

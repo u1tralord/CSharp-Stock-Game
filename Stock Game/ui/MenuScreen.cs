@@ -1,10 +1,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace Stock_Game
+namespace Stock_Game.ui
 {
     abstract class MenuScreen : Screen
     {
+        public int menuWidth;
+        public int menuHeight;
+        public int menuXPos;
+        public int menuYPos;
+
         public List<MenuOption> options;
         public string title;
 
@@ -31,6 +36,12 @@ namespace Stock_Game
                 }
                 Console.SetCursorPosition(xPos, yPos + y + 1);
             }
+        }
+
+        public void DrawMenuLine()
+        {
+            for (int i = 0; i < menuWidth - 1; i++) 
+                Console.Write("*");
         }
 
         public void KeyPress(ConsoleKeyInfo key)
@@ -115,6 +126,42 @@ namespace Stock_Game
                     if (options[i].Highlighted)
                         return i;
                 }
+            }
+            return -1;
+        }
+
+        public void CalculateWindowSize()
+        {
+            if (options != null)
+            {
+                menuWidth = (GetMaxWidth() + 8 <= Console.WindowWidth) ? GetMaxWidth() + 8 : Console.WindowWidth;
+                menuHeight = (options.Count * 2 + 4 <= Console.WindowHeight) ? options.Count * 2 + 4 : Console.WindowHeight;
+            }
+        }
+
+        public void CalculateWindowPosition()
+        {
+            if (menuWidth == default(int) || menuHeight == default(int))
+                CalculateWindowSize();
+
+            menuXPos = Console.WindowWidth / 2 - menuWidth / 2;
+            menuYPos = Console.WindowHeight / 2 - menuHeight / 2;
+        }
+
+        public int GetMaxWidth()
+        {
+            if (options != null)
+            {
+                int maxLength = 0;
+                foreach (MenuOption opt in options)
+                {
+                    if (opt.OptionText.Length > maxLength)
+                        maxLength = opt.OptionText.Length;
+                }
+                if (title.Length > maxLength)
+                    maxLength = title.Length;
+
+                return maxLength;
             }
             return -1;
         }
