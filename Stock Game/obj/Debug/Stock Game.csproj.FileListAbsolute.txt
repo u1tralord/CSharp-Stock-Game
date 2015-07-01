@@ -1,6 +1,0 @@
-C:\Users\Jacob\Documents\Programming\C#\Projects\Stock Game\Stock Game\obj\Debug\Stock Game.csprojResolveAssemblyReference.cache
-C:\Users\Jacob\Documents\Programming\C#\Projects\Stock Game\Stock Game\obj\Debug\Stock Game.exe
-C:\Users\Jacob\Documents\Programming\C#\Projects\Stock Game\Stock Game\bin\Debug\Stock Game.exe.config
-C:\Users\Jacob\Documents\Programming\C#\Projects\Stock Game\Stock Game\bin\Debug\Stock Game.exe
-C:\Users\Jacob\Documents\Programming\C#\Projects\Stock Game\Stock Game\bin\Debug\Stock Game.pdb
-C:\Users\Jacob\Documents\Programming\C#\Projects\Stock Game\Stock Game\obj\Debug\Stock Game.pdb
