@@ -9,7 +9,7 @@ using Stock_Game.ui;
 
 namespace Stock_Game
 {
-    class Program
+    class Launcher
     {
         static void Main(string[] args)
         {
