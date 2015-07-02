@@ -17,17 +17,21 @@ namespace Stock_Game.ui.screens
 			MenuOption rowTitle = new MenuOption(string.Format("{0, 5}|{1, 6}|{2, 10}|{3, 10}", "SYMB", "Owned", "Value", "Total"));
 			options.Add(rowTitle);
 			
+			bool firstItem = true;
 			foreach(string key in StockGame.Account.Stocks.Keys)
 			{
 				Stock stock = StockGame.GetStock(key);
 				int owned = StockGame.Account.Stocks[key];
 				
-				MenuOption stockOption = new MenuOption(string.Format("{0, 5}|{1, 6}|{2, 10:0.00}|{3, 10:0.00}", stock.Symbol.PadLeft(3, ' '), owned.ToString(), stock.LatestTradePrice, (owned * stock.LatestTradePrice)));
+					
+				MenuOption stockOption = new MenuOption(string.Format("{0, 5}|{1, 6}|{2, 10:0.00}|{3, 10:0.00}", stock.Symbol.PadLeft(3, ' ').ToUpper(), owned.ToString(), stock.LatestTradePrice, (owned * stock.LatestTradePrice)));
+				stockOption.Highlighted = firstItem;
 				options.Add(stockOption);
+				firstItem = false;
 			}
             CalculateWindowSize();
             CalculateWindowPosition();
-
+			
             textXPos = menuXPos + 2;
         }
 

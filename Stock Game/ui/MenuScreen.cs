@@ -113,6 +113,7 @@ namespace Stock_Game.ui
 			if (key.Key == ConsoleKey.Backspace)
             {
 				StockGame.GoBack();
+				return true;
 			}
 			
             if (key.Key == ConsoleKey.UpArrow) { ChangeHighlighted(1); return true; }
