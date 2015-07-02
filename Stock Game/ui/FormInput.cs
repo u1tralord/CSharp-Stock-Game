@@ -6,6 +6,8 @@ namespace Stock_Game.ui
 {
     public class FormInput
     {
+		public event EventHandler ValueModified;
+		
         int inputLength;
         int xPos;
         int yPos;
@@ -35,7 +37,7 @@ namespace Stock_Game.ui
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
         }
-
+			
         public int XPos
         {
             get { return xPos; }
@@ -57,9 +59,9 @@ namespace Stock_Game.ui
         public string ValueText
         {
             get { return valueText; }
-            set { valueText = value;  }
+            set { valueText = value; }
         }
-
+		
         public string OptionText
         {
             get { return optionText; }
@@ -73,6 +75,12 @@ namespace Stock_Game.ui
             {
                 Console.SetCursorPosition(this.xPos, this.yPos);
                 highlighted = value;
+				
+				EventHandler handler = ValueModified;
+				if (handler != null)
+				{
+					handler(this, EventArgs.Empty);
+				}	
             }
         }
     }

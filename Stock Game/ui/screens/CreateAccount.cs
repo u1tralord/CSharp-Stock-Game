@@ -45,6 +45,12 @@ namespace Stock_Game.ui.screens
         public override void EnterAction()
         {
             base.EnterAction();
+			
+			if(inputs[0].ValueText.Equals("") || inputs[1].ValueText.Equals("") || inputs[2].ValueText.Equals("")){
+				StockGame.GoBack();
+				return;
+			}
+			
             LoadProfiles();
             bool foundUser = false;
             foreach (Profile p in loadedProfiles)
@@ -58,9 +64,15 @@ namespace Stock_Game.ui.screens
                     Profile profile = new Profile(inputs[0].ValueText, Cryptography.GetHash(inputs[2].ValueText), Convert.ToInt32(inputs[3].ValueText));
                     profile.Save();
                     StockGame.Account = profile;
-                    StockGame.ChangeScreen(new MainMenu(), this);
+                    StockGame.ChangeScreen(new MainMenu());
                 }
+				else{
+					errorString = "Passwords do not match";
+				}
             }
+			else{
+				errorString = "User already exists";
+			}
         }
     }
 }

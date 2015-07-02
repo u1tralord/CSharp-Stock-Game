@@ -38,6 +38,12 @@ namespace Stock_Game.ui.screens
         public override void EnterAction()
         {
             base.EnterAction();
+			
+			if(inputs[0].ValueText.Equals("") || inputs[1].ValueText.Equals("")){
+				StockGame.GoBack();
+				return;
+			}
+			
             LoadProfiles();
             bool foundUser = false;
             foreach (Profile p in loadedProfiles)
@@ -49,7 +55,7 @@ namespace Stock_Game.ui.screens
                     {
                         errorString = "Correct Password";
                         StockGame.Account = p;
-                        StockGame.ChangeScreen(new MainMenu(), this);
+                        StockGame.ChangeScreen(new MainMenu());
                     }
                     else
                     {

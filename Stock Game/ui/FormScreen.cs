@@ -45,8 +45,8 @@ namespace Stock_Game.ui
             if(errorString != null)
                 PrintError(errorString);
             errorString = null;
-
-            HightlightInput(GetHighlighted());
+			
+			HightlightInput(GetHighlighted());
         }
 
         public virtual void EnterAction()
@@ -94,16 +94,6 @@ namespace Stock_Game.ui
 			}
 			else{
 				
-				//SCOLLING NEEDS TO BE FIXED
-				int startDrawing = 0;
-				if(GetHighlighted() > (int)(optionsDisplayed*0.6))
-					startDrawing = GetHighlighted()-1;
-				
-				for (int i = startDrawing; i < optionsDisplayed+startDrawing; i++)
-				{
-					Console.Write("[{0}] {1}", inputs[i].Highlighted ? "*" : Convert.ToString(i+1) , inputs[i].OptionText);
-					Console.SetCursorPosition(textXPos, Console.CursorTop + 2);
-				}
 			}
 		}
 		

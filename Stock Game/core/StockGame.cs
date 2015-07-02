@@ -31,6 +31,9 @@ namespace Stock_Game.core
 		
         public void Start()
         {
+			Profile p = new Profile(@"profiles\jacob.profile");
+			profile = p;
+			
             currentScreen = new StartScreen();
 
             while (running)
@@ -44,9 +47,13 @@ namespace Stock_Game.core
             }
         }
 		
-		public static void ChangeScreen(Screen newScreen, Screen oldScreen){
+		public static void GoBack(){
+			ChangeScreen(PreviousScreens[PreviousScreens.Count - 1]);
+		}
+		
+		public static void ChangeScreen(Screen newScreen){
+			previousScreens.Add(currentScreen);
 			currentScreen = newScreen;
-			previousScreens.Add(oldScreen);
 		}
 		
 		public static Stock GetStock(string stockSymbol){

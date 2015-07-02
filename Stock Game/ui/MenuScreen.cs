@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using Stock_Game.core;
+
 namespace Stock_Game.ui
 {
     public abstract class MenuScreen : Screen
@@ -104,10 +106,15 @@ namespace Stock_Game.ui
 
             if (key.Key == ConsoleKey.Enter)
             {
-                options[GetHighlighted()].Select(EventArgs.Empty);
+                options[GetHighlighted() >= 0 ? GetHighlighted() : 0].Select(EventArgs.Empty);
                 return true;
             }
-
+			
+			if (key.Key == ConsoleKey.Backspace)
+            {
+				StockGame.GoBack();
+			}
+			
             if (key.Key == ConsoleKey.UpArrow) { ChangeHighlighted(1); return true; }
             if (key.Key == ConsoleKey.DownArrow) { ChangeHighlighted(-1); return true; }
             if (key.Key == ConsoleKey.LeftArrow) { Console.Write("<"); return true; }

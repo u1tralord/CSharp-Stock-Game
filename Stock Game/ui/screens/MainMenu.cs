@@ -49,12 +49,12 @@ namespace Stock_Game.ui.screens
 		
 		public void BuySelected(object sender, EventArgs e)
         {
-			
+			StockGame.ChangeScreen(new BuyForm());
         }
 		
 		public void SellSelected(object sender, EventArgs e)
         {
-			
+			StockGame.ChangeScreen(new SellForm());
         }
 
         public void LookupSelected(object sender, EventArgs e)
@@ -68,21 +68,19 @@ namespace Stock_Game.ui.screens
 
 		public void PortfolioSelected(object sender, EventArgs e)
         {
-			StockGame.ChangeScreen(new PortfolioScreen(), this);
+			StockGame.ChangeScreen(new PortfolioScreen());
         }
 		
 		public void GoBackSelected(object sender, EventArgs e)
         {
-			StockGame.ChangeScreen(StockGame.PreviousScreens[StockGame.PreviousScreens.Count - 1], this);
+			StockGame.GoBack();
         }
 
         public override void Draw()
         {
             base.Draw(); 
 			Console.SetCursorPosition(1, 1);
-            double b = StockGame.Account.Balance;
-            double t = StockGame.Account.TotalStockWorth;
-			Console.Write("Balance: {0} Total Stock Worth: {1}", b, t);
+			Console.Write("Balance: {0} Total Stock Worth: {1}", StockGame.Account.Balance, StockGame.Account.TotalStockWorth);
 			
             Console.SetCursorPosition(0, Console.WindowHeight-1);
         }

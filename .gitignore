@@ -5,7 +5,14 @@
 *.csproj
 *.csproj.user
 App.config
+profiles\*
 Stock Game\bin\*
 Stock Game\obj\*
 Stock Game\Properties\*
 Stock Game\profiles\*
+
+profiles/*
+Stock Game/bin/*
+Stock Game/obj/*
+Stock Game/Properties/*
+Stock Game/profiles/*

@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
+using Stock_Game.market;
+
 namespace Stock_Game.core
 {
     public class Profile
@@ -29,6 +31,41 @@ namespace Stock_Game.core
             this.balance = balance0;
             this.stocks = new Dictionary<string, int>();
         }
+		
+		public string Buy(string stockSymbol, int quantity){
+			Stock stock = StockGame.GetStock(stockSymbol);
+			double tradeValue = (double)(quantity * stock.LatestTradePrice);
+			if(stock != null && balance >= tradeValue){
+				if(stocks.ContainsKey(stockSymbol))
+					stocks[stockSymbol] += quantity;
+				else
+					stocks.Add(stockSymbol, quantity);
+				
+				balance -= tradeValue;
+				return "";
+			}
+			else{
+				return "Invalid Stock or insufficient funds";
+			}
+		}
+		
+		public string Sell(string stockSymbol, int quantity){
+			Stock stock = StockGame.GetStock(stockSymbol);
+			double tradeValue = (double)(quantity * stock.LatestTradePrice);
+			
+			if(stock != null && stocks.ContainsKey(stockSymbol)){
+				if(stocks[stockSymbol] >= quantity)
+					stocks[stockSymbol] -= quantity;
+				
+				if(stocks[stockSymbol] == 0) // REMOVE STOCK FROM LIST;
+				
+				balance += tradeValue;
+				return "";
+			}
+			else{
+				return "Invalid Stock or insufficient stock quantity owned";
+			}
+		}
 		
         public int Load(string accountFile)
         {
@@ -68,7 +105,9 @@ namespace Stock_Game.core
 			}
 			
             string fileName = path + this.name + ".profile";
-
+			if(File.Exists(fileName))
+				File.Delete(fileName);
+			
             if (!File.Exists(fileName))
             {
                 //FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Write);
