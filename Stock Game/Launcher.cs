@@ -11,9 +11,11 @@ namespace Stock_Game
 {
     class Launcher
     {
+		static StockGame game;
+		
         static void Main(string[] args)
         {
-            StockGame game = new StockGame();
+            game = new StockGame();
             game.Start();
         }
     }
