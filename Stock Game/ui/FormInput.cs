@@ -14,7 +14,6 @@ namespace Stock_Game.ui
         bool highlighted = false;
         string valueText = "";
         string optionText = "";
-
         public FormInput(string text, int inputLength, int x, int y)
         {
             this.ValueText = "";
@@ -30,9 +29,10 @@ namespace Stock_Game.ui
             Console.Write("[" + (this.Highlighted ? "*": " ") + "]" + this.OptionText + ":");
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
-            Console.Write(this.ValueText);
-            for (int i = 0; i < inputLength - this.ValueText.Length; i++)
-                Console.Write(" ");
+			
+			Console.Write(this.ValueText);
+			for (int i = 0; i < inputLength - this.ValueText.Length; i++)
+				Console.Write(" ");
 
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;

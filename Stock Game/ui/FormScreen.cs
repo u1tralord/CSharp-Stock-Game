@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using Stock_Game.core;
+
 namespace Stock_Game.ui
 {
     public abstract class FormScreen : Screen
@@ -136,6 +138,8 @@ namespace Stock_Game.ui
             {
                 if (inputs[GetHighlighted()].ValueText.Length > 0)
                     inputs[GetHighlighted()].ValueText = inputs[GetHighlighted()].ValueText.Substring(0, inputs[GetHighlighted()].ValueText.Length - 1);
+				else
+					StockGame.GoBack();
                 return true;
             }
             return false;
