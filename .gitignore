@@ -3,8 +3,9 @@
 *.sln
 *.suo
 *.csproj
+*.csproj.user
 App.config
-bin\*
-obj\*
-Properties\*
-profiles\*
+Stock Game\bin\*
+Stock Game\obj\*
+Stock Game\Properties\*
+Stock Game\profiles\*
