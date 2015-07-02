@@ -33,14 +33,11 @@ namespace Stock_Game.ui.screens
 
         public void LoginSelected(object sender, EventArgs e)
         {
-			Profile p = new Profile(@"profiles\Jacob.profile");
-			StockGame.Account = p;
-			StockGame.ChangeScreen(new MainMenu(), this);
+			StockGame.ChangeScreen(new LoginForm(), this);
         }
         public void CreateAccountSelected(object sender, EventArgs e)
         {
-			Profile p = new Profile("Jacob", Cryptography.GetHash("PASSWORD"), 100000);
-			p.Save();
+            StockGame.ChangeScreen(new CreateAccount(), this);
         }
 
         public override void Draw()

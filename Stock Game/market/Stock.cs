@@ -33,15 +33,26 @@ namespace Stock_Game.market
 								break;
 
 							case "Ask":
-								if (reader.Read()) this.AskPrice = Convert.ToDouble(reader.Value.Trim());
+                                if (reader.Read())
+                                {
+                                    try { this.AskPrice = Convert.ToDouble(reader.Value.Trim()); }
+                                    catch (FormatException e) { this.AskPrice = 0; }
+                                }
 								break;
 								
 							case "Bid":
-								if (reader.Read()) this.BidPrice = Convert.ToDouble(reader.Value.Trim());
+                                if (reader.Read()){
+                                    try { this.LatestTradePrice = Convert.ToDouble(reader.Value.Trim()); }
+                                    catch (FormatException e) { this.LatestTradePrice = 0; }
+                                }
 								break;
 							
 							case "LastTradePriceOnly":
-								if (reader.Read()) this.LatestTradePrice = Convert.ToDouble(reader.Value.Trim());
+                                if (reader.Read())
+                                {
+                                    try { this.BidPrice = Convert.ToDouble(reader.Value.Trim()); }
+                                    catch (FormatException e) { this.BidPrice = 0; }
+                                }
 								break;
 								
 							case "article":

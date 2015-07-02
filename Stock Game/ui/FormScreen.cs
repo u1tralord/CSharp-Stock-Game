@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Stock_Game.ui
 {
-    public abstract class MenuScreen : Screen
+    public abstract class FormScreen : Screen
     {
         public int menuWidth;
         public int menuHeight;
@@ -17,23 +17,41 @@ namespace Stock_Game.ui
 		
 		public int optionsDisplayed = -1;
 		
-        public List<MenuOption> options;
+        public List<FormInput> inputs;
         public string title;
+        public string bottomMsg = "Submit a blank form to return";
+        public string errorString;
 
         public virtual void Draw()
         {
-            Console.Clear();
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
 
+            Console.Clear();
             DrawBorder(0, 0, Console.WindowWidth, Console.WindowHeight - 1);
 			
 			if (menuWidth != default(int) && menuHeight != default(int) && menuXPos != default(int) && menuYPos != default(int))
 				DrawBorder(menuXPos, menuYPos, menuWidth, menuHeight);
 			if(!String.IsNullOrEmpty(title))
 				DrawTitle();
-			if(options != null)
-				DrawOptions();
+            if (inputs != null)
+                DrawInputs();
+
+            Console.SetCursorPosition(textXPos, Console.CursorTop + 2);
+            Console.Write("Press <Enter> to submit");
+            Console.SetCursorPosition(textXPos, Console.CursorTop + 1);
+            Console.Write(bottomMsg);
+
+            if(errorString != null)
+                PrintError(errorString);
+            errorString = null;
+
+            HightlightInput(GetHighlighted());
+        }
+
+        public virtual void EnterAction()
+        {
+
         }
 
         public static void DrawBorder(int xPos, int yPos, int w, int h)
@@ -63,14 +81,15 @@ namespace Stock_Game.ui
             DrawMenuLine();
         }
 		
-		public void DrawOptions(){
-			Console.SetCursorPosition(textXPos, menuYPos + 3);
+		public void DrawInputs(){
+			Console.SetCursorPosition(textXPos, menuYPos + 2);
 			
 			if(optionsDisplayed == -1){
-				for (int i = 0; i < options.Count; i++)
+				for (int i = 0; i < inputs.Count; i++)
 				{
-					Console.Write("[{0}] {1}", options[i].Highlighted ? "*" : Convert.ToString(i+1) , options[i].OptionText);
-					Console.SetCursorPosition(textXPos, Console.CursorTop + 2);
+                    inputs[i].XPos = textXPos;
+                    inputs[i].YPos = Console.CursorTop + 2;
+                    inputs[i].Draw();
 				}
 			}
 			else{
@@ -82,7 +101,7 @@ namespace Stock_Game.ui
 				
 				for (int i = startDrawing; i < optionsDisplayed+startDrawing; i++)
 				{
-					Console.Write("[{0}] {1}", options[i].Highlighted ? "*" : Convert.ToString(i+1) , options[i].OptionText);
+					Console.Write("[{0}] {1}", inputs[i].Highlighted ? "*" : Convert.ToString(i+1) , inputs[i].OptionText);
 					Console.SetCursorPosition(textXPos, Console.CursorTop + 2);
 				}
 			}
@@ -104,97 +123,89 @@ namespace Stock_Game.ui
 
             if (key.Key == ConsoleKey.Enter)
             {
-                options[GetHighlighted()].Select(EventArgs.Empty);
+                EnterAction();
                 return true;
             }
 
             if (key.Key == ConsoleKey.UpArrow) { ChangeHighlighted(1); return true; }
             if (key.Key == ConsoleKey.DownArrow) { ChangeHighlighted(-1); return true; }
-            if (key.Key == ConsoleKey.LeftArrow) { Console.Write("<"); return true; }
-            if (key.Key == ConsoleKey.RightArrow) { Console.Write(">"); return true; }
+            //if (key.Key == ConsoleKey.LeftArrow) { Console.Write("<"); return true; }
+            //if (key.Key == ConsoleKey.RightArrow) { Console.Write(">"); return true; }
 
-            switch (key.KeyChar)
+            string validChars = "abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=[]{}\\|;':\"<>,./?";
+            if (validChars.Contains(key.KeyChar.ToString()))
             {
-                case '1':
-                    HightlightOption(0);
+                if (inputs[GetHighlighted()].ValueText.Length < inputs[GetHighlighted()].InputLength)
+                    inputs[GetHighlighted()].ValueText += key.KeyChar;
+                else
+                {
                     return true;
-                case '2':
-                    HightlightOption(1);
-                    return true;
-                case '3':
-                    HightlightOption(2);
-                    return true;
-                case '4':
-                    HightlightOption(3);
-                    return true;
-                case '5':
-                    HightlightOption(4);
-                    return true;
-                case '6':
-                    HightlightOption(5);
-                    return true;
-                case '7':
-                    HightlightOption(6);
-                    return true;
-                case '8':
-                    HightlightOption(7);
-                    return true;
-                case '9':
-                    HightlightOption(8);
-                    return true;
+                }
             }
-            if (key.KeyChar == 'a')
+            if (key.Key == ConsoleKey.Backspace)
             {
-                //Console.Write("You pressed a");
+                if (inputs[GetHighlighted()].ValueText.Length > 0)
+                    inputs[GetHighlighted()].ValueText = inputs[GetHighlighted()].ValueText.Substring(0, inputs[GetHighlighted()].ValueText.Length - 1);
                 return true;
             }
             return false;
         }
 
-        public void HightlightOption(int optionIndex)
+        public void HightlightInput(int inputIndex)
         {
-            if (optionIndex >= 0 && optionIndex < options.Count)
+            if (inputIndex >= 0 && inputIndex < inputs.Count)
             {
-                options[GetHighlighted()].Highlighted = false;
-                options[optionIndex].Highlighted = true;
-                options[optionIndex].Select(EventArgs.Empty);
+                inputs[GetHighlighted()].Highlighted = false;
+                inputs[inputIndex].Highlighted = true;
+                MoveCursorToInput(inputs[inputIndex]);
             }
         }
 
         public void ChangeHighlighted(int toMove)
         {
             int currentSelected = GetHighlighted();
-            if (currentSelected != -1 && (currentSelected - toMove >= 0 && currentSelected - toMove < options.Count))
+            if (currentSelected != -1 && (currentSelected - toMove >= 0 && currentSelected - toMove < inputs.Count))
             {
-                options[currentSelected].Highlighted = false;
-                options[currentSelected - toMove].Highlighted = true;
+                inputs[currentSelected].Highlighted = false;
+                inputs[currentSelected - toMove].Highlighted = true;
             }
+        }
+
+        public static void MoveCursorToInput(FormInput input){
+            Console.SetCursorPosition(input.XPos + input.OptionText.Length + input.ValueText.Length + 4, input.YPos);
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
         }
 
         public int GetHighlighted()
         {
-            if (options != null)
+            if (inputs != null)
             {
-                for (int i = 0; i < options.Count; i++)
+                for (int i = 0; i < inputs.Count; i++)
                 {
-                    if (options[i].Highlighted)
+                    if (inputs[i].Highlighted)
                         return i;
                 }
             }
             return -1;
         }
 
+        public static void PrintError(string message)
+        {
+            Console.SetCursorPosition(Console.WindowWidth-1-message.Length-5, Console.WindowHeight-1);
+            Console.Write(message);
+        }
+
         public void CalculateWindowSize()
         {
-            if (options != null)
+            if (inputs != null)
             {
-                menuWidth = (GetMaxWidth() + 8 <= MAX_MENU_WIDTH) ? GetMaxWidth() + 8 : MAX_MENU_WIDTH;
-				
-				if(options.Count * 2 + 4 <= MAX_MENU_HEIGHT)
-					menuHeight = options.Count * 2 + 4;
+                menuWidth = (GetMaxWidth() + 6 <= MAX_MENU_WIDTH) ? GetMaxWidth() + 6 : MAX_MENU_WIDTH;
+                if (inputs.Count * 2 + 7 <= MAX_MENU_HEIGHT)
+                    menuHeight = inputs.Count * 2 + 7;
 				else{
 					menuHeight = MAX_MENU_HEIGHT;
-					optionsDisplayed = (MAX_MENU_HEIGHT - 4)/2;
+					optionsDisplayed = (MAX_MENU_HEIGHT - 7)/2;
 				}
                 //menuHeight = (options.Count * 2 + 4 <= Console.WindowHeight) ? options.Count * 2 + 4 : Console.WindowHeight;
             }
@@ -211,17 +222,18 @@ namespace Stock_Game.ui
 
         public int GetMaxWidth()
         {
-            if (options != null)
+            if (inputs != null)
             {
                 int maxLength = 0;
-                foreach (MenuOption opt in options)
+                foreach (FormInput opt in inputs)
                 {
-                    if (opt.OptionText.Length > maxLength)
-                        maxLength = opt.OptionText.Length;
+                    if (opt.OptionText.Length + opt.InputLength > maxLength)
+                        maxLength = opt.OptionText.Length + opt.InputLength;
                 }
                 if (title.Length > maxLength)
                     maxLength = title.Length;
-
+                if (bottomMsg.Length > maxLength)
+                    maxLength = bottomMsg.Length;
                 return maxLength;
             }
             return -1;

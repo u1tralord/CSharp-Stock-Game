@@ -21,7 +21,13 @@ namespace Stock_Game.ui.screens
 			
             MenuOption sell = new MenuOption("Sell Stocks");
 			sell.OptionSelected += SellSelected;
-			
+
+            MenuOption lookup = new MenuOption("Lookup Stock");
+            lookup.OptionSelected += LookupSelected;
+
+            MenuOption compare = new MenuOption("Compare Stocks");
+            compare.OptionSelected += CompareSelected;
+
 			MenuOption viewPortfolio = new MenuOption("View Portfolio");
 			viewPortfolio.OptionSelected += PortfolioSelected;
 			
@@ -30,13 +36,11 @@ namespace Stock_Game.ui.screens
 			
 			options.Add(buy);
 			options.Add(sell);
+            options.Add(lookup);
+            options.Add(compare);
 			options.Add(viewPortfolio);
 			options.Add(goBack);
 
-			for(int i = 0; i < 10; i++)
-			{
-				options.Add(new MenuOption("Option #"+i));
-			}
             CalculateWindowSize();
             CalculateWindowPosition();
 
@@ -52,7 +56,16 @@ namespace Stock_Game.ui.screens
         {
 			
         }
-		
+
+        public void LookupSelected(object sender, EventArgs e)
+        {
+
+        }
+        public void CompareSelected(object sender, EventArgs e)
+        {
+
+        }
+
 		public void PortfolioSelected(object sender, EventArgs e)
         {
 			StockGame.ChangeScreen(new PortfolioScreen(), this);
@@ -67,7 +80,9 @@ namespace Stock_Game.ui.screens
         {
             base.Draw(); 
 			Console.SetCursorPosition(1, 1);
-			Console.Write("Balance: {0} Total Stock Worth: {1}", StockGame.Account.Balance, StockGame.Account.TotalStockWorth);
+            double b = StockGame.Account.Balance;
+            double t = StockGame.Account.TotalStockWorth;
+			Console.Write("Balance: {0} Total Stock Worth: {1}", b, t);
 			
             Console.SetCursorPosition(0, Console.WindowHeight-1);
         }

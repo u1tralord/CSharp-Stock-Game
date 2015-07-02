@@ -30,26 +30,6 @@ namespace Stock_Game.ui.screens
 
             textXPos = menuXPos + 2;
         }
-		
-		public void BuySelected(object sender, EventArgs e)
-        {
-			
-        }
-		
-		public void SellSelected(object sender, EventArgs e)
-        {
-			
-        }
-		
-		public void PortfolioSelected(object sender, EventArgs e)
-        {
-			
-        }
-		
-		public void GoBackSelected(object sender, EventArgs e)
-        {
-			StockGame.ChangeScreen(StockGame.PreviousScreens[StockGame.PreviousScreens.Count - 1], this);
-        }
 
         public override void Draw()
         {

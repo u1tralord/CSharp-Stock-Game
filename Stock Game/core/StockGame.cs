@@ -5,7 +5,6 @@
 * Sell Stock Screen
 * View Portfolio Screen
 * Analyze Stock Screen
-* Login Screen
 * Create Account Screen
 */
 using System;
@@ -23,7 +22,6 @@ namespace Stock_Game.core
 {
     public class StockGame
     {
-		
         private static bool running = true;
 		private static List<Screen> previousScreens = new List<Screen>();
 		
@@ -34,13 +32,15 @@ namespace Stock_Game.core
         public void Start()
         {
             currentScreen = new StartScreen();
-			//Stock google = new Stock("GOOG");
 
             while (running)
             {
                 currentScreen.Draw();
-                var x = Console.ReadKey();
-                currentScreen.KeyPress(x);
+
+                ConsoleKeyInfo x;
+                do{
+                    x = Console.ReadKey();
+                }while(!currentScreen.KeyPress(x));
             }
         }
 		
