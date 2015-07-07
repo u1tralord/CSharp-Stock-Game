@@ -76,16 +76,19 @@ namespace Stock_Game.ui
 				}
 			}
 			else{
-				
-				//SCOLLING NEEDS TO BE FIXED
 				int startDrawing = 0;
-				if(GetHighlighted() > (int)(optionsDisplayed*0.6))
+				if(GetHighlighted() > (int)(optionsDisplayed*0.3))
 					startDrawing = GetHighlighted()-1;
+				
+				if(startDrawing > options.Count-optionsDisplayed) startDrawing = options.Count-optionsDisplayed; 
+						
 				
 				for (int i = startDrawing; i < optionsDisplayed+startDrawing; i++)
 				{
-					Console.Write("[{0}] {1}", options[i].Highlighted ? "*" : Convert.ToString(i+1) , options[i].OptionText);
-					Console.SetCursorPosition(textXPos, Console.CursorTop + 2);
+					if(i < options.Count){
+						Console.Write("[{0}] {1}", options[i].Highlighted ? "*" : Convert.ToString(i+1) , options[i].OptionText);
+						Console.SetCursorPosition(textXPos, Console.CursorTop + 2);
+					}
 				}
 			}
 		}

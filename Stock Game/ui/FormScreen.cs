@@ -17,7 +17,7 @@ namespace Stock_Game.ui
 		public int MAX_MENU_HEIGHT = (int)Math.Round(Console.WindowHeight * 0.8);
 		
 		
-		public int optionsDisplayed = -1;
+		public int inputsDisplayed = -1;
 		
         public List<FormInput> inputs;
         public string title;
@@ -86,7 +86,7 @@ namespace Stock_Game.ui
 		public void DrawInputs(){
 			Console.SetCursorPosition(textXPos, menuYPos + 2);
 			
-			if(optionsDisplayed == -1){
+			if(inputsDisplayed == -1){
 				for (int i = 0; i < inputs.Count; i++)
 				{
                     inputs[i].XPos = textXPos;
@@ -95,7 +95,21 @@ namespace Stock_Game.ui
 				}
 			}
 			else{
+				int startDrawing = 0;
+				if(GetHighlighted() > (int)(inputsDisplayed*0.3))
+					startDrawing = GetHighlighted()-1;
 				
+				if(startDrawing > inputs.Count-inputsDisplayed) startDrawing = inputs.Count-inputsDisplayed; 
+						
+				
+				for (int i = startDrawing; i < inputsDisplayed+startDrawing; i++)
+				{
+					if(i < inputs.Count){
+						inputs[i].XPos = textXPos;
+						inputs[i].YPos = Console.CursorTop + 2;
+						inputs[i].Draw();
+					}
+				}
 			}
 		}
 		
@@ -199,7 +213,7 @@ namespace Stock_Game.ui
                     menuHeight = inputs.Count * 2 + 7;
 				else{
 					menuHeight = MAX_MENU_HEIGHT;
-					optionsDisplayed = (MAX_MENU_HEIGHT - 7)/2;
+					inputsDisplayed = (MAX_MENU_HEIGHT - 7)/2;
 				}
                 //menuHeight = (options.Count * 2 + 4 <= Console.WindowHeight) ? options.Count * 2 + 4 : Console.WindowHeight;
             }

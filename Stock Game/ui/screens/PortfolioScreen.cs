@@ -28,6 +28,7 @@ namespace Stock_Game.ui.screens
 				
 				MenuOption stockOption = new MenuOption(string.Format("{0, 5}|{1, 6}|{2, 10:0.00}|{3, 10:0.00}", stock.Symbol.PadLeft(3, ' ').ToUpper(), owned.ToString(), stock.LatestTradePrice, (owned * stock.LatestTradePrice)));
 				stockOption.Highlighted = firstItem;
+				stockOption.OptionSelected += StockSelected;
 				options.Add(stockOption);
 				firstItem = false;
 			}
@@ -37,10 +38,15 @@ namespace Stock_Game.ui.screens
             textXPos = menuXPos + 2;
         }
 		
+		public void StockSelected(object sender, EventArgs e)
+        {
+			EnterAction();
+        }
+		
 		public override void EnterAction(){
 			int nowHighlighted = GetHighlighted();
 			if(nowHighlighted > 0 && nowHighlighted < keys.Count){
-				string stockSymbol = keys[nowHighlighted];
+				string stockSymbol = keys[nowHighlighted-1];
 				StockGame.ChangeScreen(new AnalyzeForm(stockSymbol));
 			}
 		}

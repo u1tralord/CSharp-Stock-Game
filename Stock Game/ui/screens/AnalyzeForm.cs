@@ -16,6 +16,7 @@ namespace Stock_Game.ui.screens
 			init();
 			Stock stock = StockGame.GetStock(stockSymbol);
 			inputs[0].ValueText = stock.Symbol;
+			UpdateValues(this, EventArgs.Empty);
 		}
 		
         public AnalyzeForm()
@@ -24,12 +25,6 @@ namespace Stock_Game.ui.screens
         }
 		
 		public void init(){
-			for(int x = 0; x < Console.WindowWidth; x++)
-				for(int y = 0; y < Console.WindowHeight; y++){
-					Console.SetCursorPosition(x,y);
-					Console.Write("|");
-				}
-				
 			title = "Analyze Stock";
             inputs = new List<FormInput>();
 
@@ -45,11 +40,11 @@ namespace Stock_Game.ui.screens
 			inputs.Add(new FormInput("AskPrice", 15, 0, 0));
 			inputs.Add(new FormInput("BidPrice", 15, 0, 0));
 			inputs.Add(new FormInput("LatestTradePrice", 15, 0, 0));
-			/*inputs.Add(new FormInput("DayLow", 15, 0, 0));
+			inputs.Add(new FormInput("DayLow", 15, 0, 0));
 			inputs.Add(new FormInput("DayHigh", 15, 0, 0));
 			inputs.Add(new FormInput("DayValueChange", 15, 0, 0));
 			inputs.Add(new FormInput("YearLow", 15, 0, 0));
-			inputs.Add(new FormInput("YearHigh", 15, 0, 0));*/
+			inputs.Add(new FormInput("YearHigh", 15, 0, 0));
 			
             CalculateWindowSize();
             CalculateWindowPosition();
@@ -66,16 +61,16 @@ namespace Stock_Game.ui.screens
 				catch(Exception ex){}
 			}
 			if(stock != null){
-				inputs[1].ValueText = ""+stock.Name;
-				inputs[2].ValueText = ""+stock.Currency;
-				inputs[3].ValueText = ""+stock.AskPrice;
-				inputs[4].ValueText = ""+stock.BidPrice;
-				inputs[5].ValueText = ""+stock.LatestTradePrice;
-				inputs[6].ValueText = ""+stock.DayLow;
-				inputs[7].ValueText = ""+stock.DayHigh;
-				inputs[8].ValueText = ""+stock.DayValueChange;
-				inputs[9].ValueText = ""+stock.YearLow;
-				inputs[10].ValueText = ""+stock.YearHigh;
+				inputs[1].ValueText = " "+stock.Name;
+				inputs[2].ValueText = " "+stock.Currency;
+				inputs[3].ValueText = " "+stock.AskPrice;
+				inputs[4].ValueText = " "+stock.BidPrice;
+				inputs[5].ValueText = " "+stock.LatestTradePrice;
+				inputs[6].ValueText = " "+stock.DayLow;
+				inputs[7].ValueText = " "+stock.DayHigh;
+				inputs[8].ValueText = " "+stock.DayValueChange;
+				inputs[9].ValueText = " "+stock.YearLow;
+				inputs[10].ValueText = " "+stock.YearHigh;
 			}
 		}
 		

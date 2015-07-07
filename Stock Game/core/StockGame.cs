@@ -41,6 +41,14 @@ namespace Stock_Game.core
             }
         }
 		
+		public static void CoolLoad(){
+			for(int x = 0; x < Console.WindowWidth; x++)
+				for(int y = 0; y < Console.WindowHeight; y++){
+					Console.SetCursorPosition(x,y);
+					Console.Write("|");
+				}
+			Console.SetCursorPosition(0, 0);
+		}
 		public static void GoBack(){
 			ChangeScreen(PreviousScreens[PreviousScreens.Count - 1]);
 		}
@@ -48,6 +56,7 @@ namespace Stock_Game.core
 		public static void ChangeScreen(Screen newScreen){
 			previousScreens.Add(currentScreen);
 			currentScreen = newScreen;
+			CoolLoad();
 		}
 		
 		public static Stock GetStock(string stockSymbol){
