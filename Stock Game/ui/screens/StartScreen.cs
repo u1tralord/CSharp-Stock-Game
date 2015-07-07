@@ -44,6 +44,7 @@ namespace Stock_Game.ui.screens
         {
             base.Draw();
             Console.SetCursorPosition(0, Console.WindowHeight-1);
+			Console.Write(Launcher.VERSION);
         }
     }
 }

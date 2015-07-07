@@ -30,9 +30,13 @@ namespace Stock_Game.ui.screens
 
         private void LoadProfiles()
         {
-            string[] files = Directory.GetFiles(Profile.defaultProfileLocation);
-            foreach (string f in files)
-                loadedProfiles.Add(new Profile(f));
+            if(!Directory.Exists(Profile.defaultProfileLocation))
+				Directory.CreateDirectory(Profile.defaultProfileLocation);
+			else{
+				string[] files = Directory.GetFiles(Profile.defaultProfileLocation);
+				foreach (string f in files)
+					loadedProfiles.Add(new Profile(f));
+			}
         }
 
         public override void EnterAction()
@@ -53,7 +57,10 @@ namespace Stock_Game.ui.screens
                     foundUser = true;
                     if (Cryptography.CheckHash(inputs[1].ValueText, p.HashedPassword))
                     {
-                        errorString = "Correct Password";
+						string loginMessage = "Login successful. Loading stock data for your account...";
+                        Console.SetCursorPosition(Console.WindowWidth -1 - loginMessage.Length , Console.WindowHeight-1);
+						Launcher.stockGame.SetConsoleColors(ConsoleColor.White, ConsoleColor.Black);
+						Console.Write(loginMessage);
                         Launcher.stockGame.Account = p;
                         Launcher.stockGame.ChangeScreen(new MainMenu());
                     }

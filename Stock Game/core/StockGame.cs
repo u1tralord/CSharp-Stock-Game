@@ -41,6 +41,7 @@ namespace Stock_Game.core
         }
 		
 		public void DrawScreen(){
+			SetConsoleColors(ConsoleColor.White, ConsoleColor.Black);
 			currentScreen.Draw();
 		}
 		

@@ -131,6 +131,12 @@ namespace Stock_Game.ui
                 EnterAction();
                 return true;
             }
+			
+			if (key.Key == ConsoleKey.Tab)
+            {
+				ChangeHighlighted(-1);
+                return true;
+            }
 
             if (key.Key == ConsoleKey.UpArrow) { ChangeHighlighted(1); return true; }
             if (key.Key == ConsoleKey.DownArrow) { ChangeHighlighted(-1); return true; }

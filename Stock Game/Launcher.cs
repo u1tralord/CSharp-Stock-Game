@@ -11,10 +11,13 @@ namespace Stock_Game
 {
     class Launcher
     {
+		public const string GAME_NAME = "Stock Game";
+		public const string VERSION = "Version: v0.01";
 		public static StockGame stockGame;
 		
         static void Main(string[] args)
         {
+			Console.Title = GAME_NAME + " | " + VERSION;
             stockGame = new StockGame();
             stockGame.Start();
         }
