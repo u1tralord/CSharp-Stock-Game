@@ -26,7 +26,7 @@ namespace Stock_Game.ui
         public void Draw()
         {
             Console.SetCursorPosition(xPos, yPos);
-            Console.Write("[" + (this.Highlighted ? "*": " ") + "]" + this.OptionText + ":");
+            Console.Write("[" + (this.Highlighted ? "*": " ") + "] " + this.OptionText + ":");
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
 			

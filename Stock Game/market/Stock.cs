@@ -10,6 +10,8 @@ namespace Stock_Game.market
 {
 	public class Stock
 	{	
+		int lastUpdated;
+		
 		public Stock(string symbl){
 			this.Symbol = symbl;
 			Update();
@@ -54,6 +56,46 @@ namespace Stock_Game.market
                                     catch (FormatException e) { this.BidPrice = 0; }
                                 }
 								break;
+							
+							case "DaysLow":
+                                if (reader.Read())
+                                {
+                                    try { this.DayLow = Convert.ToDouble(reader.Value.Trim()); }
+                                    catch (FormatException e) { this.BidPrice = 0; }
+                                }
+								break;
+							
+							case "DaysHigh":
+                                if (reader.Read())
+                                {
+                                    try { this.DayHigh = Convert.ToDouble(reader.Value.Trim()); }
+                                    catch (FormatException e) { this.BidPrice = 0; }
+                                }
+								break;
+								
+							case "Change":
+                                if (reader.Read())
+                                {
+                                    try { this.DayValueChange = Convert.ToDouble(reader.Value.Trim()); }
+                                    catch (FormatException e) { this.BidPrice = 0; }
+                                }
+								break;
+								
+							case "YearLow":
+                                if (reader.Read())
+                                {
+                                    try { this.YearLow = Convert.ToDouble(reader.Value.Trim()); }
+                                    catch (FormatException e) { this.BidPrice = 0; }
+                                }
+								break;
+								
+							case "YearHigh":
+                                if (reader.Read())
+                                {
+                                    try { this.YearHigh = Convert.ToDouble(reader.Value.Trim()); }
+                                    catch (FormatException e) { this.BidPrice = 0; }
+                                }
+								break;
 								
 							case "article":
 								// Detect this article element.
@@ -74,6 +116,7 @@ namespace Stock_Game.market
 					}
 				}
 			}
+			lastUpdated = System.Environment.TickCount;
 		}
 		
 		public String Name{get; set;}
@@ -91,5 +134,9 @@ namespace Stock_Game.market
 		
 		public double YearLow{get; set;}
 		public double YearHigh{get; set;}
+		
+		public int TimeSinceUpdate{
+			get { return System.Environment.TickCount - lastUpdated; }
+		}
 	}
 }

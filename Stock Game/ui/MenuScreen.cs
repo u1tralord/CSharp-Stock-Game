@@ -95,6 +95,10 @@ namespace Stock_Game.ui
             for (int i = 0; i < menuWidth - 1; i++) 
                 Console.Write("*");
         }
+		
+		public virtual void EnterAction(){
+			options[GetHighlighted() >= 0 ? GetHighlighted() : 0].Select(EventArgs.Empty);
+		}
 
         public bool KeyPress(ConsoleKeyInfo key)
         {
@@ -106,7 +110,7 @@ namespace Stock_Game.ui
 
             if (key.Key == ConsoleKey.Enter)
             {
-                options[GetHighlighted() >= 0 ? GetHighlighted() : 0].Select(EventArgs.Empty);
+				EnterAction();
                 return true;
             }
 			

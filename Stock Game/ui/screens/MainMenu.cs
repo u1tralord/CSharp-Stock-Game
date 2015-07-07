@@ -59,7 +59,7 @@ namespace Stock_Game.ui.screens
 
         public void LookupSelected(object sender, EventArgs e)
         {
-
+			StockGame.ChangeScreen(new AnalyzeForm());
         }
         public void CompareSelected(object sender, EventArgs e)
         {

@@ -1,9 +1,6 @@
 ﻿/**
 * TODO:
 * MenuScreen Scrolling fix
-* Buy Stock Screen
-* Sell Stock Screen
-* View Portfolio Screen
 * Analyze Stock Screen
 * Create Account Screen
 */
@@ -30,10 +27,7 @@ namespace Stock_Game.core
 		private static Screen currentScreen;
 		
         public void Start()
-        {
-			Profile p = new Profile(@"profiles\jacob.profile");
-			profile = p;
-			
+        {			
             currentScreen = new StartScreen();
 
             while (running)
@@ -59,6 +53,9 @@ namespace Stock_Game.core
 		public static Stock GetStock(string stockSymbol){
 			if(!stockCache.ContainsKey(stockSymbol) && stockSymbol.Length == 4)
 				stockCache.Add(stockSymbol, new Stock(stockSymbol));
+			
+			if(stockCache.ContainsKey(stockSymbol) && stockCache[stockSymbol].TimeSinceUpdate > 5000)
+				stockCache[stockSymbol].Update();
 			
 			return stockCache[stockSymbol];
 		}
