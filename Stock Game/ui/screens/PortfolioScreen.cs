@@ -80,6 +80,7 @@ namespace Stock_Game.ui.screens
 			Console.Write("Balance: {0} Total Stock Worth: {1}", Launcher.stockGame.Account.Balance, Launcher.stockGame.Account.TotalStockWorth);
 			
             Console.SetCursorPosition(0, Console.WindowHeight-1);
+			Console.Write("<Backspace> Go Back   <B> Buy Stock   <S> Sell Stock   <Enter> Stock Info ");
         }
     }
 }

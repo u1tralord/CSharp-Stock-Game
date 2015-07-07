@@ -62,6 +62,31 @@ namespace Stock_Game.core
 			ChangeScreen(PreviousScreens[PreviousScreens.Count - 1]);
 		}
 		
+		public static void WriteError(string errorMessage){
+			if(errorMessage.Length > Console.WindowWidth-1)
+				errorMessage = errorMessage.Substring(0, Console.WindowWidth-1);
+			Launcher.stockGame.SetConsoleColors(ConsoleColor.Red, ConsoleColor.Black);
+			Console.SetCursorPosition(Console.WindowWidth -1 - errorMessage.Length , Console.WindowHeight-1);
+			Console.Write(errorMessage);
+		}
+		
+		public static void WriteNotification(string notification){
+			if(notification.Length > Console.WindowWidth-1)
+				notification = notification.Substring(0, Console.WindowWidth-1);
+			Launcher.stockGame.SetConsoleColors(ConsoleColor.White, ConsoleColor.Black);
+			Console.SetCursorPosition(Console.WindowWidth -1 - notification.Length , Console.WindowHeight-1);
+			Console.Write(notification);
+		}
+		
+		public static void WriteInstructions(string instructions){
+			if(instructions.Length > Console.WindowWidth-1)
+				instructions = instructions.Substring(0, Console.WindowWidth-1);
+			Launcher.stockGame.SetConsoleColors(ConsoleColor.White, ConsoleColor.Black);
+			Console.SetCursorPosition(0, Console.WindowHeight-1);
+			Console.Write(instructions);
+		}
+		
+		
 		public void ChangeScreen(Screen newScreen){
 			previousScreens.Add(currentScreen);
 			currentScreen = newScreen;

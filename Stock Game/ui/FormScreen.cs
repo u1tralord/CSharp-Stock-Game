@@ -143,8 +143,8 @@ namespace Stock_Game.ui
             //if (key.Key == ConsoleKey.LeftArrow) { Console.Write("<"); return true; }
             //if (key.Key == ConsoleKey.RightArrow) { Console.Write(">"); return true; }
 
-            string validChars = "abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=[]{}\\|;':\"<>,./?";
-            if (validChars.Contains(key.KeyChar.ToString()))
+            string validChars = " abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=[]{}\\|;':\"<>,./?";
+            if (validChars.Contains(key.KeyChar.ToString()) || validChars.ToUpper().Contains(key.KeyChar.ToString()))
             {
                 if (inputs[GetHighlighted()].ValueText.Length < inputs[GetHighlighted()].InputLength)
                     inputs[GetHighlighted()].ValueText += key.KeyChar;
@@ -204,6 +204,7 @@ namespace Stock_Game.ui
 
         public static void PrintError(string message)
         {
+			Launcher.stockGame.SetConsoleColors(ConsoleColor.Red, ConsoleColor.Black);
             Console.SetCursorPosition(Console.WindowWidth-1-message.Length-5, Console.WindowHeight-1);
             Console.Write(message);
         }

@@ -9,7 +9,8 @@ namespace Stock_Game.ui.screens
     public class LoginForm : FormScreen
     {
         List<Profile> loadedProfiles = new List<Profile>();
-
+		string loginMessage = "Login successful. Loading stock data for your account...";
+		
         public LoginForm()
         {
             title = "Login";
@@ -57,10 +58,7 @@ namespace Stock_Game.ui.screens
                     foundUser = true;
                     if (Cryptography.CheckHash(inputs[1].ValueText, p.HashedPassword))
                     {
-						string loginMessage = "Login successful. Loading stock data for your account...";
-                        Console.SetCursorPosition(Console.WindowWidth -1 - loginMessage.Length , Console.WindowHeight-1);
-						Launcher.stockGame.SetConsoleColors(ConsoleColor.White, ConsoleColor.Black);
-						Console.Write(loginMessage);
+                        StockGame.WriteNotification(loginMessage);
                         Launcher.stockGame.Account = p;
                         Launcher.stockGame.ChangeScreen(new MainMenu());
                     }
