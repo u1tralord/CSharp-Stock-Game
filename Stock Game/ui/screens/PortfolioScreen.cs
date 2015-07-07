@@ -19,10 +19,10 @@ namespace Stock_Game.ui.screens
 			options.Add(rowTitle);
 			
 			bool firstItem = true;
-			foreach(string key in StockGame.Account.Stocks.Keys)
+			foreach(string key in Launcher.stockGame.Account.Stocks.Keys)
 			{
-				Stock stock = StockGame.GetStock(key);
-				int owned = StockGame.Account.Stocks[key];
+				Stock stock = Launcher.stockGame.GetStock(key);
+				int owned = Launcher.stockGame.Account.Stocks[key];
 				
 				keys.Add(key);
 				
@@ -47,15 +47,37 @@ namespace Stock_Game.ui.screens
 			int nowHighlighted = GetHighlighted();
 			if(nowHighlighted > 0 && nowHighlighted < keys.Count){
 				string stockSymbol = keys[nowHighlighted-1];
-				StockGame.ChangeScreen(new AnalyzeForm(stockSymbol));
+				Launcher.stockGame.ChangeScreen(new AnalyzeForm(stockSymbol));
 			}
+		}
+		
+		public override bool KeyPress(ConsoleKeyInfo key){
+			if (key.KeyChar == 'b')
+            {
+				int nowHighlighted = GetHighlighted();
+				if(nowHighlighted > 0 && nowHighlighted < keys.Count){
+					string stockSymbol = keys[nowHighlighted-1];
+					Launcher.stockGame.ChangeScreen(new BuyForm(stockSymbol));
+				}
+                return true;
+            }
+			if (key.KeyChar == 's')
+            {
+				int nowHighlighted = GetHighlighted();
+				if(nowHighlighted > 0 && nowHighlighted < keys.Count){
+					string stockSymbol = keys[nowHighlighted-1];
+					Launcher.stockGame.ChangeScreen(new SellForm(stockSymbol));
+				}
+                return true;
+            }
+			return base.KeyPress(key);
 		}
 
         public override void Draw()
         {
             base.Draw(); 
 			Console.SetCursorPosition(1, 1);
-			Console.Write("Balance: {0} Total Stock Worth: {1}", StockGame.Account.Balance, StockGame.Account.TotalStockWorth);
+			Console.Write("Balance: {0} Total Stock Worth: {1}", Launcher.stockGame.Account.Balance, Launcher.stockGame.Account.TotalStockWorth);
 			
             Console.SetCursorPosition(0, Console.WindowHeight-1);
         }

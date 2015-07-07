@@ -40,7 +40,7 @@ namespace Stock_Game.ui.screens
             base.EnterAction();
 			
 			if(inputs[0].ValueText.Equals("") || inputs[1].ValueText.Equals("")){
-				StockGame.GoBack();
+				Launcher.stockGame.GoBack();
 				return;
 			}
 			
@@ -54,8 +54,8 @@ namespace Stock_Game.ui.screens
                     if (Cryptography.CheckHash(inputs[1].ValueText, p.HashedPassword))
                     {
                         errorString = "Correct Password";
-                        StockGame.Account = p;
-                        StockGame.ChangeScreen(new MainMenu());
+                        Launcher.stockGame.Account = p;
+                        Launcher.stockGame.ChangeScreen(new MainMenu());
                     }
                     else
                     {

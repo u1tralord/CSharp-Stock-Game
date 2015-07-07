@@ -27,15 +27,13 @@ namespace Stock_Game.ui
         {
             Console.SetCursorPosition(xPos, yPos);
             Console.Write("[" + (this.Highlighted ? "*": " ") + "]" + this.OptionText + ":");
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.ForegroundColor = ConsoleColor.Black;
+			Launcher.stockGame.SetConsoleColors(ConsoleColor.Black, ConsoleColor.White);
 			
 			Console.Write(this.ValueText);
 			for (int i = 0; i < inputLength - this.ValueText.Length; i++)
 				Console.Write(" ");
 
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.White;
+            Launcher.stockGame.SetConsoleColors(ConsoleColor.White, ConsoleColor.Black);
         }
 			
         public int XPos

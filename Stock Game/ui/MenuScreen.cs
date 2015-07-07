@@ -103,7 +103,7 @@ namespace Stock_Game.ui
 			options[GetHighlighted() >= 0 ? GetHighlighted() : 0].Select(EventArgs.Empty);
 		}
 
-        public bool KeyPress(ConsoleKeyInfo key)
+        public virtual bool KeyPress(ConsoleKeyInfo key)
         {
             if (key.Key == ConsoleKey.Escape)
             {
@@ -119,7 +119,7 @@ namespace Stock_Game.ui
 			
 			if (key.Key == ConsoleKey.Backspace)
             {
-				StockGame.GoBack();
+				Launcher.stockGame.GoBack();
 				return true;
 			}
 			
@@ -157,11 +157,6 @@ namespace Stock_Game.ui
                 case '9':
                     HightlightOption(8);
                     return true;
-            }
-            if (key.KeyChar == 'a')
-            {
-                //Console.Write("You pressed a");
-                return true;
             }
             return false;
         }

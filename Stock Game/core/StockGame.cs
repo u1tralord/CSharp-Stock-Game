@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.IO;
 
 using Stock_Game.ui;
 using Stock_Game.ui.screens;
@@ -19,21 +19,20 @@ namespace Stock_Game.core
 {
     public class StockGame
     {
-        private static bool running = true;
-		private static List<Screen> previousScreens = new List<Screen>();
+        private bool running = true;
+		private List<Screen> previousScreens = new List<Screen>();
 		
-		private static Profile profile;
-		private static Dictionary<string, Stock> stockCache = new Dictionary<string, Stock>();
-		private static Screen currentScreen;
+		private Profile profile;
+		private Dictionary<string, Stock> stockCache = new Dictionary<string, Stock>();
+		private Screen currentScreen;
 		
         public void Start()
-        {			
+        {	
             currentScreen = new StartScreen();
 
             while (running)
             {
-                currentScreen.Draw();
-
+				DrawScreen();
                 ConsoleKeyInfo x;
                 do{
                     x = Console.ReadKey();
@@ -41,7 +40,16 @@ namespace Stock_Game.core
             }
         }
 		
-		public static void CoolLoad(){
+		public void DrawScreen(){
+			currentScreen.Draw();
+		}
+		
+		public void SetConsoleColors(ConsoleColor foreground, ConsoleColor background){
+			Console.BackgroundColor = background;
+            Console.ForegroundColor = foreground;
+		}
+		
+		public void CoolLoad(){
 			for(int x = 0; x < Console.WindowWidth; x++)
 				for(int y = 0; y < Console.WindowHeight; y++){
 					Console.SetCursorPosition(x,y);
@@ -49,17 +57,17 @@ namespace Stock_Game.core
 				}
 			Console.SetCursorPosition(0, 0);
 		}
-		public static void GoBack(){
+		public void GoBack(){
 			ChangeScreen(PreviousScreens[PreviousScreens.Count - 1]);
 		}
 		
-		public static void ChangeScreen(Screen newScreen){
+		public void ChangeScreen(Screen newScreen){
 			previousScreens.Add(currentScreen);
 			currentScreen = newScreen;
 			CoolLoad();
 		}
 		
-		public static Stock GetStock(string stockSymbol){
+		public Stock GetStock(string stockSymbol){
 			if(!stockCache.ContainsKey(stockSymbol) && stockSymbol.Length == 4)
 				stockCache.Add(stockSymbol, new Stock(stockSymbol));
 			
@@ -69,16 +77,16 @@ namespace Stock_Game.core
 			return stockCache[stockSymbol];
 		}
 		
-		public static double GetStockValue(string stockSymbol){
+		public double GetStockValue(string stockSymbol){
 			return GetStock(stockSymbol).LatestTradePrice;
 		}
 		
-		public static bool Running{
+		public bool Running{
 			get{ return running; }
 			set{ running = value; }
 		}
 		
-		public static Profile Account{
+		public Profile Account{
 			get{ return profile; }
 			set{
 				profile = value; 
@@ -89,12 +97,12 @@ namespace Stock_Game.core
 			}
 		}
 		
-		public static Screen CurrentScreen{
+		public Screen CurrentScreen{
 			get{ return currentScreen; }
 			set{ currentScreen = value; }
 		}
 		
-		public static List<Screen> PreviousScreens{
+		public List<Screen> PreviousScreens{
 			get{ return previousScreens; }
 		}
     }

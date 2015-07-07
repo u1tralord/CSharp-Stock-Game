@@ -26,8 +26,7 @@ namespace Stock_Game.ui
 
         public virtual void Draw()
         {
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.White;
+            Launcher.stockGame.SetConsoleColors(ConsoleColor.White, ConsoleColor.Black);
 
             Console.Clear();
             DrawBorder(0, 0, Console.WindowWidth, Console.WindowHeight - 1);
@@ -153,7 +152,7 @@ namespace Stock_Game.ui
                 if (inputs[GetHighlighted()].ValueText.Length > 0)
                     inputs[GetHighlighted()].ValueText = inputs[GetHighlighted()].ValueText.Substring(0, inputs[GetHighlighted()].ValueText.Length - 1);
 				else
-					StockGame.GoBack();
+					Launcher.stockGame.GoBack();
                 return true;
             }
             return false;
@@ -181,8 +180,7 @@ namespace Stock_Game.ui
 
         public static void MoveCursorToInput(FormInput input){
             Console.SetCursorPosition(input.XPos + input.OptionText.Length + input.ValueText.Length + 4, input.YPos);
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.ForegroundColor = ConsoleColor.Black;
+            Launcher.stockGame.SetConsoleColors(ConsoleColor.Black, ConsoleColor.White);
         }
 
         public int GetHighlighted()

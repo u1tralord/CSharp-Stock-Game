@@ -33,7 +33,7 @@ namespace Stock_Game.core
         }
 		
 		public string Buy(string stockSymbol, int quantity){
-			Stock stock = StockGame.GetStock(stockSymbol);
+			Stock stock = Launcher.stockGame.GetStock(stockSymbol);
 			double tradeValue = (double)(quantity * stock.LatestTradePrice);
 			if(stock != null && balance >= tradeValue){
 				if(stocks.ContainsKey(stockSymbol))
@@ -50,7 +50,7 @@ namespace Stock_Game.core
 		}
 		
 		public string Sell(string stockSymbol, int quantity){
-			Stock stock = StockGame.GetStock(stockSymbol);
+			Stock stock = Launcher.stockGame.GetStock(stockSymbol);
 			double tradeValue = (double)(quantity * stock.LatestTradePrice);
 			
 			if(stock != null && stocks.ContainsKey(stockSymbol)){
@@ -120,7 +120,7 @@ namespace Stock_Game.core
 					file.WriteLine(this.hashedPassword);
 					file.WriteLine(this.balance);
 					foreach(string key in stocks.Keys)
-						file.WriteLine(key + ":" + stocks[key]);
+						file.WriteLine(key.ToUpper() + ":" + stocks[key]);
 				}
                 return 1;
             }
@@ -149,7 +149,7 @@ namespace Stock_Game.core
 				foreach(string key in stocks.Keys)
 				{
 					//1 IS A SUBSTITUTION FOR THE STOCK VALUE
-					sumValue += (double)(stocks[key] * StockGame.GetStockValue(key));
+					sumValue += (double)(stocks[key] * Launcher.stockGame.GetStockValue(key));
 				}
 				return sumValue;
 			}

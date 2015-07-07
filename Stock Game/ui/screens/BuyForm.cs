@@ -14,7 +14,7 @@ namespace Stock_Game.ui.screens
 		public BuyForm(string stockSymbol) : base()
 		{
 			init();
-			Stock stock = StockGame.GetStock(stockSymbol);
+			Stock stock = Launcher.stockGame.GetStock(stockSymbol);
 			inputs[0].ValueText = stock.Symbol;
 			inputs[0].Highlighted = false;
 			inputs[1].Highlighted = true;
@@ -55,7 +55,7 @@ namespace Stock_Game.ui.screens
 			Stock stock = null;
 			if(inputs[0].ValueText.Length >=4 ){
 				try{
-					stock = StockGame.GetStock(inputs[0].ValueText);
+					stock = Launcher.stockGame.GetStock(inputs[0].ValueText);
 				}
 				catch(Exception exception){}
 			}
@@ -69,20 +69,21 @@ namespace Stock_Game.ui.screens
         {
             base.EnterAction();
 			if(inputs[0].ValueText.Equals("") || inputs[1].ValueText.Equals("")){
-				StockGame.GoBack();
+				Launcher.stockGame.GoBack();
 				return;
 			}
 			else{
-				errorString = StockGame.Account.Buy(inputs[0].ValueText, Convert.ToInt32(inputs[1].ValueText));
-				StockGame.Account.Save();
-				StockGame.GoBack();
+				errorString = Launcher.stockGame.Account.Buy(inputs[0].ValueText, Convert.ToInt32(inputs[1].ValueText));
+				Launcher.stockGame.Account.Save();
+				Launcher.stockGame.GoBack();
+				return;
 			}
         }
 		
 		public override void Draw(){
 			base.Draw();
 			Console.SetCursorPosition(1, 1);
-			Console.Write("Balance: {0} Total Stock Worth: {1}", StockGame.Account.Balance, StockGame.Account.TotalStockWorth);
+			Console.Write("Balance: {0} Total Stock Worth: {1}", Launcher.stockGame.Account.Balance, Launcher.stockGame.Account.TotalStockWorth);
 			HightlightInput(GetHighlighted());
 		}
     }

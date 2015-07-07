@@ -37,17 +37,21 @@ namespace Stock_Game.ui.screens
 
         private void LoadProfiles()
         {
-            string[] files = Directory.GetFiles(Profile.defaultProfileLocation);
-            foreach (string f in files)
-                loadedProfiles.Add(new Profile(f));
+			if(!Directory.Exists(Profile.defaultProfileLocation))
+				Directory.CreateDirectory(Profile.defaultProfileLocation);
+			else{
+				string[] files = Directory.GetFiles(Profile.defaultProfileLocation);
+				foreach (string f in files)
+					loadedProfiles.Add(new Profile(f));
+			}
         }
 
         public override void EnterAction()
         {
             base.EnterAction();
 			
-			if(inputs[0].ValueText.Equals("") || inputs[1].ValueText.Equals("") || inputs[2].ValueText.Equals("")){
-				StockGame.GoBack();
+			if(inputs[0].ValueText.Equals("") || inputs[1].ValueText.Equals("") || inputs[2].ValueText.Equals("") || inputs[3].ValueText.Equals("")){
+				Launcher.stockGame.GoBack();
 				return;
 			}
 			
@@ -63,8 +67,8 @@ namespace Stock_Game.ui.screens
                 {
                     Profile profile = new Profile(inputs[0].ValueText, Cryptography.GetHash(inputs[2].ValueText), Convert.ToInt32(inputs[3].ValueText));
                     profile.Save();
-                    StockGame.Account = profile;
-                    StockGame.ChangeScreen(new MainMenu());
+                    Launcher.stockGame.Account = profile;
+                    Launcher.stockGame.ChangeScreen(new MainMenu());
                 }
 				else{
 					errorString = "Passwords do not match";

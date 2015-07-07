@@ -33,11 +33,11 @@ namespace Stock_Game.ui.screens
 
         public void LoginSelected(object sender, EventArgs e)
         {
-			StockGame.ChangeScreen(new LoginForm());
+			Launcher.stockGame.ChangeScreen(new LoginForm());
         }
         public void CreateAccountSelected(object sender, EventArgs e)
         {
-            StockGame.ChangeScreen(new CreateAccount());
+            Launcher.stockGame.ChangeScreen(new CreateAccount());
         }
 
         public override void Draw()
